@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>move.svg</file>
+    <file>back.svg</file>
+    <file>forward.svg</file>
+    <file>open.svg</file>
+    <file>save.svg</file>
+  </qresource>
+</RCC>
