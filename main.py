@@ -34,7 +34,7 @@ class MyWidget(QMainWindow):
     def full_table(self):
         if self.df is not None:
             self.model = QStandardItemModel()
-            print(self.df.shape())
+            print(self.df.main_df.shape)
             # app = QApplication(sys.argv)
             # model =
 
