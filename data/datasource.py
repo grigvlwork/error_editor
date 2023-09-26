@@ -13,6 +13,16 @@ class Record:
             self.code = self.task.split("```")[1].split('\n')
         self.new_answer = new_answer
 
+    def get_row(self):
+        return [
+            str(self.row_id),
+            self.comment,
+            self.teacher_answer,
+            "" if str(self.super_answer) == 'nan' else str(self.super_answer),
+            self.task,
+            "" if str(self.new_answer) == 'nan' else str(self.new_answer)
+        ]
+
 
 class Dataframe:
     def __init__(self):
@@ -36,15 +46,15 @@ class Dataframe:
 
     def get_comments(self):
         if self.main_df is not None:
-            self.current_df = self.main_df[self.main_df[self.header['comment']].notna()]
+            self.current_df = self.main_df[self.main_df[self.headers['comment']].notna()]
             comms = set()
-            for i, row in self.current_df.loc[:, [self.header['comment']]].iterrows():
-                comms.add(f"{row[self.header['comment']]}")
+            for i, row in self.current_df.loc[:, [self.headers['comment']]].iterrows():
+                comms.add(f"{row[self.headers['comment']]}")
             return sorted(list(comms))
 
     def get_rows_by_comment(self, comment):
         if self.main_df is not None:
-            self.current_df = self.main_df[self.main_df[self.header['comment']] == comment]
+            self.current_df = self.main_df[self.main_df[self.headers['comment']] == comment]
             self.rows_list = []
             for i, row in self.current_df.loc[:, ['RowID']].iterrows():
                 self.rows_list.append(f"{row['RowID']}")
@@ -53,7 +63,7 @@ class Dataframe:
     def get_all_records(self, refresh=True):
         if not refresh:
             return self.all_records
-        self.current_df = self.main_df[self.main_df[self.header['comment']].notna()]
+        self.current_df = self.main_df[self.main_df[self.headers['comment']].notna()]
         self.all_records.clear()
         for index, row in self.current_df.iterrows():
             new_rec = Record(row[self.headers['RowID']],
@@ -66,10 +76,9 @@ class Dataframe:
             self.all_records.append(new_rec)
         return self.all_records
 
-
     def set_answer(self, row, answer):  # 42476
         if self.main_df is not None:
-            self.main_df.loc[self.main_df['RowID'] == int(row), [self.header['new_ans']]] = answer
+            self.main_df.loc[self.main_df['RowID'] == int(row), [self.headers['new_ans']]] = answer
 
     def open(self):
         self.main_df = pd.read_excel(self.filename, sheet_name='Лист1')

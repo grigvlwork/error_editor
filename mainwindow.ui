@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1358</width>
-    <height>879</height>
+    <width>1119</width>
+    <height>907</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -80,13 +80,6 @@
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QCheckBox" name="show_all">
-              <property name="text">
-               <string>Показать все</string>
-              </property>
-             </widget>
-            </item>
            </layout>
           </item>
           <item>
@@ -103,16 +96,9 @@
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="label">
+           <widget class="QLabel" name="comment_lb">
             <property name="text">
-             <string>Фильтр по комментарию</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="comments_cb">
-            <property name="sizeAdjustPolicy">
-             <enum>QComboBox::AdjustToContents</enum>
+             <string>Комментарий</string>
             </property>
            </widget>
           </item>
