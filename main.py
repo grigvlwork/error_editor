@@ -18,6 +18,7 @@ class MyWidget(QMainWindow):
         self.tabWidget.currentChanged.connect(self.full_table)
         self.full_table_tv.clicked.connect(self.change_current_rec)
         self.new_answer.textChanged.connect(self.check_edit_answer)
+        self.tabWidget.setTabVisible(1, False)
         self.model = None
         self.current_rec = None
         self.records = None
@@ -33,6 +34,7 @@ class MyWidget(QMainWindow):
             self.df = datasource.Dataframe()
             self.df.set_filename(fname[0])
             self.df.open()
+            self.tabWidget.setTabVisible(1, True)
             # self.comments_cb.clear()
             # self.comments_cb.addItems(self.df.get_comments())
 
@@ -77,9 +79,10 @@ class MyWidget(QMainWindow):
     @QtCore.pyqtSlot("QModelIndex")
     def change_current_rec(self, modelIndex):
         if self.records is not None:
-            if self.current_rec.changed:
-                self.df.save_record(self.current_rec)
-                self.current_rec = False
+            if self.current_rec is not None:
+                if self.current_rec.changed:
+                    self.df.save_record(self.current_rec)
+                    self.current_rec = False
             self.current_rec = self.records[modelIndex.row()]
             self.load_record()
 
@@ -92,14 +95,15 @@ class MyWidget(QMainWindow):
     def load_record(self):
         self.clear_controls()
         if self.current_rec is not None:
-            self.comment_lb.setText(self.current_rec.comment)
-            self.couch_answer.appendPlainText(self.current_rec.teacher_answer)
-            self.instruct.appendPlainText(self.current_rec.task)
-            self.my_answer.appendPlainText(self.current_rec.super_answer)
-            self.new_answer.appendPlainText(self.current_rec.new_answer)
+            row = self.current_rec.get_row()
+            self.comment_lb.setText(row[1])
+            self.couch_answer.appendPlainText(row[2])
+            self.instruct.appendPlainText(row[4])
+            self.my_answer.appendPlainText(row[3])
+            self.new_answer.appendPlainText(row[5])
             # print(self.current_rec)
 
-    def edit_answer(self):
+    def check_edit_answer(self):
         if self.current_rec is not None:
             if self.current_rec.new_answer != self.new_answer.toPlainText():
                 self.current_rec.new_answer = self.new_answer.toPlainText()

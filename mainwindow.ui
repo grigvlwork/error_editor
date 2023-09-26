@@ -65,22 +65,7 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_6">
-            <item>
-             <widget class="QLabel" name="total_edited">
-              <property name="text">
-               <string>Всего исправлено</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="remain_to_edit">
-              <property name="text">
-               <string>Осталось исправить</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <layout class="QHBoxLayout" name="horizontalLayout_6"/>
           </item>
           <item>
            <spacer name="horizontalSpacer">
@@ -118,7 +103,14 @@
                </widget>
               </item>
               <item>
-               <widget class="QPlainTextEdit" name="instruct"/>
+               <widget class="QPlainTextEdit" name="instruct">
+                <property name="font">
+                 <font>
+                  <family>Consolas</family>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+               </widget>
               </item>
               <item>
                <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -130,87 +122,14 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTableView" name="code_table"/>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_9">
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_3">
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_3">
-                <item>
-                 <widget class="QLabel" name="label_3">
-                  <property name="text">
-                   <string>Ответ тренера</string>
+                 <widget class="QTableView" name="code_table">
+                  <property name="font">
+                   <font>
+                    <family>Consolas</family>
+                    <pointsize>10</pointsize>
+                   </font>
                   </property>
                  </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="copy_couch_to_answer">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="text">
-                   <string>Копировать в новый</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="images/files.qrc">
-                    <normaloff>:/icons/move.svg</normaloff>:/icons/move.svg</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>24</width>
-                    <height>24</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QPlainTextEdit" name="couch_answer"/>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_4">
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_4">
-                  <item>
-                   <widget class="QLabel" name="label_4">
-                    <property name="text">
-                     <string>Мой ответ</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="copy_my_to_answer">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="text">
-                     <string>Копировать в новый</string>
-                    </property>
-                    <property name="icon">
-                     <iconset resource="images/files.qrc">
-                      <normaloff>:/icons/move.svg</normaloff>:/icons/move.svg</iconset>
-                    </property>
-                    <property name="iconSize">
-                     <size>
-                      <width>24</width>
-                      <height>24</height>
-                     </size>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <widget class="QPlainTextEdit" name="my_answer"/>
                 </item>
                </layout>
               </item>
@@ -221,6 +140,114 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Ответ тренера</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="copy_couch_to_answer">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Копировать в новый</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="images/files.qrc">
+                  <normaloff>:/icons/move.svg</normaloff>:/icons/move.svg</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>24</width>
+                  <height>24</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="couch_answer">
+              <property name="font">
+               <font>
+                <family>Consolas</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>Мой ответ</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="copy_my_to_answer">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Копировать в новый</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="images/files.qrc">
+                  <normaloff>:/icons/move.svg</normaloff>:/icons/move.svg</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>24</width>
+                  <height>24</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="my_answer">
+              <property name="font">
+               <font>
+                <family>Consolas</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QLabel" name="label_6">
               <property name="text">
                <string>Новый ответ</string>
@@ -228,7 +255,14 @@
              </widget>
             </item>
             <item>
-             <widget class="QPlainTextEdit" name="new_answer"/>
+             <widget class="QPlainTextEdit" name="new_answer">
+              <property name="font">
+               <font>
+                <family>Consolas</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+             </widget>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
