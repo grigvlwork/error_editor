@@ -228,7 +228,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPlainTextEdit" name="plainTextEdit"/>
+             <widget class="QPlainTextEdit" name="new_answer"/>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_5">

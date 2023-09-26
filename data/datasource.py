@@ -12,6 +12,7 @@ class Record:
         if "```" in self.task:
             self.code = self.task.split("```")[1].split('\n')
         self.new_answer = new_answer
+        self.changed = False
 
     def get_row(self):
         return [
@@ -22,6 +23,8 @@ class Record:
             self.task,
             "" if str(self.new_answer) == 'nan' else str(self.new_answer)
         ]
+    def __str__(self):
+        return '\n'.join(self.get_row())
 
 
 class Dataframe:
@@ -79,6 +82,10 @@ class Dataframe:
     def set_answer(self, row, answer):  # 42476
         if self.main_df is not None:
             self.main_df.loc[self.main_df['RowID'] == int(row), [self.headers['new_ans']]] = answer
+
+    def save_record(self, record):
+        self.main_df.loc[self.main_df['RowID'] == int(record.row_id), [self.headers['new_ans']]] = record.new_answer
+
 
     def open(self):
         self.main_df = pd.read_excel(self.filename, sheet_name='Лист1')
