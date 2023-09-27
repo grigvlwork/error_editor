@@ -8,7 +8,6 @@ from PyQt5.QtCore import QModelIndex
 from images import files_rc
 
 
-
 class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -20,6 +19,7 @@ class MyWidget(QMainWindow):
         # self.new_answer.textChanged.connect(self.check_edit_answer)
         self.next.clicked.connect(self.next_record)
         self.previous.clicked.connect(self.previous_record)
+        self.save_btn.clicked.connect(self.save_data)
         self.tabWidget.setTabVisible(1, False)
         self.model = None
         self.code_model = None
@@ -136,14 +136,13 @@ class MyWidget(QMainWindow):
     #             self.current_rec.changed = True
 
     def next_record(self):
-        print(self.new_answer.toPlainText())
-        print(self.current_rec.new_answer)
         if self.new_answer.toPlainText() != str(self.current_rec.new_answer):
             self.current_rec.new_answer = self.new_answer.toPlainText()
             self.df.save_record(self.current_rec)
-            self.model.setItem(self.current_index, self.current_reс.get_row())
+            if self.model is not None:
+                self.model.setItem(self.current_index, self.current_reс.get_row())
             self.records[self.current_index] = self.current_rec
-            self.save.setEnabled(True)
+            self.save_btn.setEnabled(True)
         if self.current_index < len(self.records) - 1:
             self.current_index += 1
             self.current_rec = self.records[self.current_index]
@@ -153,13 +152,19 @@ class MyWidget(QMainWindow):
         if self.new_answer.toPlainText() != self.current_rec.new_answer:
             self.current_rec.new_answer = self.new_answer.toPlainText()
             self.df.save_record(self.current_rec)
-            self.model.setItem(self.current_index, self.current_reс.get_row())
+            if self.model is not None:
+                self.model.setItem(self.current_index, self.current_reс.get_row())
             self.records[self.current_index] = self.current_rec
-            self.save.setEnabled(True)
+            self.save_btn.setEnabled(True)
         if self.current_index > 0:
             self.current_index -= 1
             self.current_rec = self.records[self.current_index]
             self.load_record()
+
+    def save_data(self):
+        if self.df is not None:
+            print(1)
+            self.df.main_df.save()
 
 
 if __name__ == '__main__':

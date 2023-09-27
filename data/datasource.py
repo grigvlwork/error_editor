@@ -7,12 +7,12 @@ class Record:
         self.row_id = row_id
         self.comment = comment
         self.teacher_answer = teacher_answer
-        self.super_answer = super_answer
+        self.super_answer = super_answer if str(super_answer) != 'nan' else ''
         self.task = task
         if "```" in self.task:
             t = self.task.split("```")[1].strip()
             self.code = t.split('\n')
-        self.new_answer = new_answer
+        self.new_answer = new_answer if str(new_answer) != 'nan' else ''
         self.changed = False
 
     def get_row(self):
@@ -24,6 +24,7 @@ class Record:
             self.task,
             "" if str(self.new_answer) == 'nan' else str(self.new_answer)
         ]
+
     def __str__(self):
         return '\n'.join(self.get_row())
 
@@ -87,9 +88,9 @@ class Dataframe:
     def save_record(self, record):
         self.main_df.loc[self.main_df['RowID'] == int(record.row_id), [self.headers['new_ans']]] = record.new_answer
 
-
     def open(self):
-        self.main_df = pd.read_excel(self.filename, sheet_name='Лист1')
+        self.main_df = pd.read_excel(self.filename, sheet_name='Лист1',
+                                     converters={self.headers['new_ans']: str})
 
     def save(self):
         if self.main_df is not None:
