@@ -20,7 +20,9 @@ class MyWidget(QMainWindow):
         self.new_answer.textChanged.connect(self.check_edit_answer)
         self.tabWidget.setTabVisible(1, False)
         self.model = None
+        self.code_model = None
         self.current_rec = None
+        self.current_index = None
         self.records = None
         # open_btn.clicked.connect(self.open_file())
         # Обратите внимание: имя элемента такое же как в QTDesigner
@@ -34,6 +36,11 @@ class MyWidget(QMainWindow):
             self.df = datasource.Dataframe()
             self.df.set_filename(fname[0])
             self.df.open()
+            self.records = self.df.get_all_records()
+            if len(self.records) > 0:
+                self.current_index = 0
+                self.current_rec = self.records[0]
+                self.load_record()
             self.tabWidget.setTabVisible(1, True)
             # self.comments_cb.clear()
             # self.comments_cb.addItems(self.df.get_comments())
@@ -101,6 +108,12 @@ class MyWidget(QMainWindow):
             self.instruct.appendPlainText(row[4])
             self.my_answer.appendPlainText(row[3])
             self.new_answer.appendPlainText(row[5])
+            if len(self.current_rec.code) > 0:
+                self.code_model = QStandardItemModel()
+                for row in self.current_rec.code:
+                    it = QStandardItem(row)
+                    self.code_model.appendRow(it)
+            self.code_table.setModel(self.code_model)
             # print(self.current_rec)
 
     def check_edit_answer(self):
