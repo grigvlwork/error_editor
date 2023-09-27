@@ -82,6 +82,14 @@
           </item>
           <item>
            <widget class="QLabel" name="comment_lb">
+            <property name="font">
+             <font>
+              <family>Arial</family>
+              <pointsize>7</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="text">
              <string>Комментарий</string>
             </property>

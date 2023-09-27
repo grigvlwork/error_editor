@@ -17,7 +17,9 @@ class MyWidget(QMainWindow):
         self.df = None
         self.tabWidget.currentChanged.connect(self.full_table)
         self.full_table_tv.clicked.connect(self.change_current_rec)
-        self.new_answer.textChanged.connect(self.check_edit_answer)
+        # self.new_answer.textChanged.connect(self.check_edit_answer)
+        self.next.clicked.connect(self.next_record)
+        self.previous.clicked.connect(self.previous_record)
         self.tabWidget.setTabVisible(1, False)
         self.model = None
         self.code_model = None
@@ -113,14 +115,51 @@ class MyWidget(QMainWindow):
                 for row in self.current_rec.code:
                     it = QStandardItem(row)
                     self.code_model.appendRow(it)
-            self.code_table.setModel(self.code_model)
+                self.code_table.setModel(self.code_model)
+                self.code_table.horizontalHeader().setVisible(False)
+                self.code_table.resizeColumnToContents(0)
+                if self.current_index == 0:
+                    self.previous.setEnabled(False)
+                else:
+                    self.previous.setEnabled(True)
+                if self.current_index >= len(self.records) - 1:
+                    self.next.setEnabled(False)
+                else:
+                    self.next.setEnabled(True)
+                # print(self.current_rec.code)
             # print(self.current_rec)
 
-    def check_edit_answer(self):
-        if self.current_rec is not None:
-            if self.current_rec.new_answer != self.new_answer.toPlainText():
-                self.current_rec.new_answer = self.new_answer.toPlainText()
-                self.current_rec.changed = True
+    # def check_edit_answer(self):
+    #     if self.current_rec is not None:
+    #         if self.current_rec.new_answer != self.new_answer.toPlainText():
+    #             self.current_rec.new_answer = self.new_answer.toPlainText()
+    #             self.current_rec.changed = True
+
+    def next_record(self):
+        print(self.new_answer.toPlainText())
+        print(self.current_rec.new_answer)
+        if self.new_answer.toPlainText() != str(self.current_rec.new_answer):
+            self.current_rec.new_answer = self.new_answer.toPlainText()
+            self.df.save_record(self.current_rec)
+            self.model.setItem(self.current_index, self.current_reс.get_row())
+            self.records[self.current_index] = self.current_rec
+            self.save.setEnabled(True)
+        if self.current_index < len(self.records) - 1:
+            self.current_index += 1
+            self.current_rec = self.records[self.current_index]
+            self.load_record()
+
+    def previous_record(self):
+        if self.new_answer.toPlainText() != self.current_rec.new_answer:
+            self.current_rec.new_answer = self.new_answer.toPlainText()
+            self.df.save_record(self.current_rec)
+            self.model.setItem(self.current_index, self.current_reс.get_row())
+            self.records[self.current_index] = self.current_rec
+            self.save.setEnabled(True)
+        if self.current_index > 0:
+            self.current_index -= 1
+            self.current_rec = self.records[self.current_index]
+            self.load_record()
 
 
 if __name__ == '__main__':

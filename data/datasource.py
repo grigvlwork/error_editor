@@ -10,7 +10,8 @@ class Record:
         self.super_answer = super_answer
         self.task = task
         if "```" in self.task:
-            self.code = self.task.split("```")[1].split('\n')
+            t = self.task.split("```")[1].strip()
+            self.code = t.split('\n')
         self.new_answer = new_answer
         self.changed = False
 
