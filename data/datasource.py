@@ -1,5 +1,6 @@
 import pandas as pd
 import time
+from PyQt5.QtWidgets import QMessageBox
 
 
 class Record:
@@ -96,6 +97,9 @@ class Dataframe:
         if self.main_df is not None:
             new_filename = self.filename.replace('.xlsx', time.strftime("%Y%m%d-%H%M%S") + '.xlsx')
             self.main_df.to_excel(new_filename, sheet_name='Лист1', index=False)
+            buttonReply = QMessageBox.information(self, "Информация",
+                                                  'Файл создан в том же каталоге,\nимя файла "' +
+                                                  new_filename + '"', QMessageBox.Ok)
 
 
 if __name__ == '__main__':

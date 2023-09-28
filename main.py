@@ -164,7 +164,7 @@ class MyWidget(QMainWindow):
     def save_data(self):
         if self.df is not None:
             print(1)
-            self.df.main_df.save()
+            self.df.save()
 
 
 if __name__ == '__main__':
