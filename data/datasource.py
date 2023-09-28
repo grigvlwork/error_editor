@@ -10,9 +10,14 @@ class Record:
         self.teacher_answer = teacher_answer
         self.super_answer = super_answer if str(super_answer) != 'nan' else ''
         self.task = task
-        if "```" in self.task:
+        if "```\n```" in self.task:
+            t = self.task.split("```\n```")[1].strip()
+            self.code = t.split('\n')
+        elif "```" in self.task:
             t = self.task.split("```")[1].strip()
             self.code = t.split('\n')
+        else:
+            self.code = ['код не распознан']
         self.new_answer = new_answer if str(new_answer) != 'nan' else ''
         self.changed = False
 
@@ -97,9 +102,7 @@ class Dataframe:
         if self.main_df is not None:
             new_filename = self.filename.replace('.xlsx', time.strftime("%Y%m%d-%H%M%S") + '.xlsx')
             self.main_df.to_excel(new_filename, sheet_name='Лист1', index=False)
-            buttonReply = QMessageBox.information(self, "Информация",
-                                                  'Файл создан в том же каталоге,\nимя файла "' +
-                                                  new_filename + '"', QMessageBox.Ok)
+
 
 
 if __name__ == '__main__':

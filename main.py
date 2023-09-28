@@ -1,7 +1,7 @@
 import sys
 
 from PyQt5 import uic, QtCore
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
 from data import datasource
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 from PyQt5.QtCore import QModelIndex
@@ -16,7 +16,8 @@ class MyWidget(QMainWindow):
         self.df = None
         self.tabWidget.currentChanged.connect(self.full_table)
         self.full_table_tv.clicked.connect(self.change_current_rec)
-        # self.new_answer.textChanged.connect(self.check_edit_answer)
+        self.copy_couch_to_answer.clicked.connect(self.copy_couch)
+        self.copy_my_to_answer.clicked.connect(self.copy_my)
         self.next.clicked.connect(self.next_record)
         self.previous.clicked.connect(self.previous_record)
         self.save_btn.clicked.connect(self.save_data)
@@ -26,12 +27,7 @@ class MyWidget(QMainWindow):
         self.current_rec = None
         self.current_index = None
         self.records = None
-        # open_btn.clicked.connect(self.open_file())
-        # Обратите внимание: имя элемента такое же как в QTDesigner
 
-    # def run(self):
-    # self.label.setText("OK")
-    # Имя элемента совпадает с objectName в QTDesigner
     def open_f(self):
         fname = QFileDialog.getOpenFileName(self, 'Open file', '', "Excel файлы (*.xls *.xlsx)")
         if len(fname[0]) > 0:
@@ -44,7 +40,7 @@ class MyWidget(QMainWindow):
                 self.current_rec = self.records[0]
                 self.load_record()
             self.tabWidget.setTabVisible(1, True)
-            # self.comments_cb.clear()
+            self.save_btn.setEnabled(True)
             # self.comments_cb.addItems(self.df.get_comments())
 
     def full_table(self):
@@ -63,10 +59,7 @@ class MyWidget(QMainWindow):
             self.model.setHorizontalHeaderItem(4, header)
             header = QStandardItem(self.df.headers['new_ans'])
             self.model.setHorizontalHeaderItem(5, header)
-            # self.model.setHorizontalHeaderItem()
             self.records = self.df.get_all_records(True)
-            # self.model.setRowCount(len(records) + 1)
-            row = 0
             for rec in self.records:
                 items = []
                 for it in rec.get_row():
@@ -80,10 +73,6 @@ class MyWidget(QMainWindow):
             self.full_table_tv.setColumnWidth(3, 220)
             self.full_table_tv.setColumnWidth(4, 220)
             self.full_table_tv.setColumnWidth(5, 220)
-
-            # print(self.df.main_df.shape)
-            # app = QApplication(sys.argv)
-            # model =
 
     @QtCore.pyqtSlot("QModelIndex")
     def change_current_rec(self, modelIndex):
@@ -107,8 +96,16 @@ class MyWidget(QMainWindow):
             row = self.current_rec.get_row()
             self.comment_lb.setText(row[1])
             self.couch_answer.appendPlainText(row[2])
+            if len(row[2]) > 0:
+                self.copy_couch_to_answer.setEnabled(True)
+            else:
+                self.copy_couch_to_answer.setEnabled(False)
             self.instruct.appendPlainText(row[4])
             self.my_answer.appendPlainText(row[3])
+            if len(row[3]) > 0:
+                self.copy_my_to_answer.setEnabled(True)
+            else:
+                self.copy_my_to_answer.setEnabled(False)
             self.new_answer.appendPlainText(row[5])
             if len(self.current_rec.code) > 0:
                 self.code_model = QStandardItemModel()
@@ -126,14 +123,6 @@ class MyWidget(QMainWindow):
                     self.next.setEnabled(False)
                 else:
                     self.next.setEnabled(True)
-                # print(self.current_rec.code)
-            # print(self.current_rec)
-
-    # def check_edit_answer(self):
-    #     if self.current_rec is not None:
-    #         if self.current_rec.new_answer != self.new_answer.toPlainText():
-    #             self.current_rec.new_answer = self.new_answer.toPlainText()
-    #             self.current_rec.changed = True
 
     def next_record(self):
         if self.new_answer.toPlainText() != str(self.current_rec.new_answer):
@@ -162,10 +151,21 @@ class MyWidget(QMainWindow):
             self.load_record()
 
     def save_data(self):
+        if self.new_answer.toPlainText() != str(self.current_rec.new_answer):
+            self.current_rec.new_answer = self.new_answer.toPlainText()
+            self.df.save_record(self.current_rec)
         if self.df is not None:
-            print(1)
             self.df.save()
+            buttonReply = QMessageBox.information(self, "Информация", 'Файл создан в том же каталоге', QMessageBox.Ok)
+            # self.save_btn.setEnabled(False)
 
+    def copy_couch(self):
+        self.new_answer.clear()
+        self.new_answer.appendPlainText(self.couch_answer.toPlainText())
+
+    def copy_my(self):
+        self.new_answer.clear()
+        self.new_answer.appendPlainText(self.my_answer.toPlainText())
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
