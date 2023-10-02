@@ -9,7 +9,7 @@ class Record:
         self.comment = comment
         self.teacher_answer = teacher_answer
         self.super_answer = super_answer if str(super_answer) != 'nan' else ''
-        self.task = task
+        self.task = task.replace('\\"', '"')
         if "```\n```" in self.task:
             t = self.task.split("```\n```")[1].strip()
             self.code = t.split('\n')
@@ -18,6 +18,7 @@ class Record:
             self.code = t.split('\n')
         else:
             self.code = ['код не распознан']
+        # self.code = self.code.replace('\"', '"')
         self.new_answer = new_answer if str(new_answer) != 'nan' else ''
         self.changed = False
 
@@ -44,11 +45,11 @@ class Dataframe:
         self.rows_list = None
         self.headers = {
             'RowID': 'RowID',
-            'comment': 'КОММЕНТАРИЙ',
-            'teach_ans': 'ответ тренера',
-            'super_ans': 'ответ супера',
-            'task': 'Задание удобным видом',
-            'new_ans': 'НОВЫЙ ОТВЕТ'
+            'comment': 'Комментарий',
+            'teach_ans': 'answer',
+            'super_ans': 'super_answer',
+            'task': 'задача',
+            'new_ans': 'Новый ответ'
         }
         self.all_records = []
 
