@@ -74,13 +74,15 @@ class MyWidget(QMainWindow):
             self.full_table_tv.setColumnWidth(4, 220)
             self.full_table_tv.setColumnWidth(5, 220)
 
-
     @QtCore.pyqtSlot("QModelIndex")
     def change_current_rec(self, modelIndex):
-        #self.df.save_record(self.current_rec)
-        self.current_rec = self.records[modelIndex.row()]
-        self.current_index = modelIndex.row()
-        self.load_record()
+        if self.records is not None:
+            if self.current_rec is not None:
+                if self.current_rec.changed:
+                    self.df.save_record(self.current_rec)
+                    self.current_rec = False
+            self.current_rec = self.records[modelIndex.row()]
+            self.load_record()
 
     def clear_controls(self):
         self.couch_answer.clear()
@@ -126,12 +128,8 @@ class MyWidget(QMainWindow):
         if self.new_answer.toPlainText() != str(self.current_rec.new_answer):
             self.current_rec.new_answer = self.new_answer.toPlainText()
             self.df.save_record(self.current_rec)
-            items = []
-            for it in self.current_rec.get_row():
-                item = QStandardItem(it)
-                items.append(item)
-            # self.model.appendRow(items)
-            self.model.setItem(self.current_index, items)
+            if self.model is not None:
+                self.model.setItem(self.current_index, self.current_reс.get_row())
             self.records[self.current_index] = self.current_rec
             self.save_btn.setEnabled(True)
         if self.current_index < len(self.records) - 1:
