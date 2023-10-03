@@ -77,8 +77,7 @@ class MyWidget(QMainWindow):
 
     @QtCore.pyqtSlot("QModelIndex")
     def change_current_rec(self, modelIndex):
-        if self.current_rec is not None:
-            self.df.save_record(self.current_rec)
+        #self.df.save_record(self.current_rec)
         self.current_rec = self.records[modelIndex.row()]
         self.current_index = modelIndex.row()
         self.load_record()
@@ -127,8 +126,12 @@ class MyWidget(QMainWindow):
         if self.new_answer.toPlainText() != str(self.current_rec.new_answer):
             self.current_rec.new_answer = self.new_answer.toPlainText()
             self.df.save_record(self.current_rec)
-            if self.model is not None:
-                self.model.setItem(self.current_index, self.current_reс.get_row())
+            items = []
+            for it in self.current_rec.get_row():
+                item = QStandardItem(it)
+                items.append(item)
+            # self.model.appendRow(items)
+            self.model.setItem(self.current_index, items)
             self.records[self.current_index] = self.current_rec
             self.save_btn.setEnabled(True)
         if self.current_index < len(self.records) - 1:
