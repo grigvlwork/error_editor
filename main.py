@@ -81,7 +81,6 @@ class MyWidget(QMainWindow):
             self.df.save_record(self.current_rec)
         self.current_rec = self.records[modelIndex.row()]
         self.current_index = modelIndex.row()
-        print(self.current_rec)
         self.load_record()
 
     def clear_controls(self):
