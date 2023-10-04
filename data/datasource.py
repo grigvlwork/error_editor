@@ -94,6 +94,9 @@ class Dataframe:
 
     def save_record(self, record):
         self.main_df.loc[self.main_df['RowID'] == int(record.row_id), [self.headers['new_ans']]] = record.new_answer
+        new_filename = self.filename.replace('.xlsx', '-auto.xlsx')
+        self.main_df.to_excel(new_filename, sheet_name='Лист1', index=False)
+
 
     def open(self):
         self.main_df = pd.read_excel(self.filename, sheet_name='Лист1',
