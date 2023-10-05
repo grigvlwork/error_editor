@@ -44,7 +44,7 @@ class MyWidget(QMainWindow):
             # self.comments_cb.addItems(self.df.get_comments())
 
     def full_table(self):
-        if self.df is not None:
+        if self.df is not None and self.model is None:
             self.model = QStandardItemModel()
             header = QStandardItem(self.df.headers['RowID'])
             self.model.setColumnCount(6)
@@ -78,10 +78,15 @@ class MyWidget(QMainWindow):
     def change_current_rec(self, modelIndex):
         if self.records is not None:
             if self.current_rec is not None:
-                if self.current_rec.changed:
+                if self.new_answer.toPlainText() != str(self.current_rec.new_answer):
+                    self.current_rec.new_answer = self.new_answer.toPlainText()
                     self.df.save_record(self.current_rec)
-                    self.current_rec = False
+                    if self.model is not None:
+                        self.model.setItem(self.current_index, self.current_reс.get_row())
+                    self.records[self.current_index] = self.current_rec
+                    self.save_btn.setEnabled(True)
             self.current_rec = self.records[modelIndex.row()]
+            self.current_index = modelIndex.row()
             self.load_record()
 
     def clear_controls(self):

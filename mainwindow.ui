@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1119</width>
-    <height>907</height>
+    <width>1040</width>
+    <height>852</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,6 +66,62 @@
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_6"/>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="accept">
+            <property name="text">
+             <string>Ответ принят</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="irrelevant">
+            <property name="text">
+             <string>Не актуальный</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="score_lb">
+            <property name="text">
+             <string>  Оценка</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="score">
+            <item>
+             <property name="text">
+              <string>2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>-1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>-2</string>
+             </property>
+            </item>
+           </widget>
           </item>
           <item>
            <spacer name="horizontalSpacer">
@@ -278,6 +334,13 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
               <item>
+               <widget class="QLabel" name="counter_lb">
+                <property name="text">
+                 <string>TextLabel</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <spacer name="horizontalSpacer_2">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -364,4 +427,7 @@
   <include location="images/files.qrc"/>
  </resources>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>
