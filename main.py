@@ -1,6 +1,6 @@
 import sys
 
-from PyQt5 import uic, QtCore
+from PyQt5 import uic, QtCore, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
 from data import datasource
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
@@ -73,21 +73,24 @@ class MyWidget(QMainWindow):
             self.full_table_tv.setColumnWidth(3, 220)
             self.full_table_tv.setColumnWidth(4, 220)
             self.full_table_tv.setColumnWidth(5, 220)
-            # https: // stackoverflow.com / questions / 62407539 / qtableview - search - and -highlight - items
-            # start = self.model.index(0, 0)
-            # text = self.current_rec.row_id
-            # matches = self.model.match(
-            #     start,
-            #     QtCore.Qt.DisplayRole,
-            #     text,
-            #     hits=1,
-            #     flags=QtCore.Qt.MatchContains
-            # )
-            # if matches:
-            #     index = matches[0]
-            #     # index.row(), index.column()
-            #     self.full_table_tv.selectionModel().select(
-            #         index, QtCore.QItemSelectionModel.Select)
+            # https://stackoverflow.com/questions/62407539/
+        self.full_table_tv.clearSelection()
+        start = self.model.index(0, 0)
+        text = self.current_rec.row_id
+        matches = self.model.match(
+            start,
+            QtCore.Qt.DisplayRole,
+            text,
+            hits=1,
+            flags=QtCore.Qt.MatchExactly
+        )
+        if matches:
+            index = matches[0]
+            # index.row(), index.column()
+            self.full_table_tv.selectionModel().select(
+                index, QtCore.QItemSelectionModel.Select)
+            self.full_table_tv.scrollTo(index)
+
 
     @QtCore.pyqtSlot("QModelIndex")
     def change_current_rec(self, modelIndex):
@@ -115,6 +118,8 @@ class MyWidget(QMainWindow):
         if self.current_rec is not None:
             row = self.current_rec.get_row()
             self.comment_lb.setText(row[1])
+            self.counter_lb.setText('id:' + row[0] + ' (' + str(self.current_index + 1) + '/' +
+                                    str(len(self.records)) + ')')
             self.couch_answer.appendPlainText(row[2])
             if len(row[2]) > 0:
                 self.copy_couch_to_answer.setEnabled(True)

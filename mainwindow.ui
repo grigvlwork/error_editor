@@ -335,8 +335,15 @@
              <layout class="QHBoxLayout" name="horizontalLayout_5">
               <item>
                <widget class="QLabel" name="counter_lb">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
                 <property name="text">
-                 <string>TextLabel</string>
+                 <string>_</string>
                 </property>
                </widget>
               </item>
