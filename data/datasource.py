@@ -11,10 +11,10 @@ class Record:
         self.super_answer = super_answer if str(super_answer) != 'nan' else ''
         self.task = task.replace('\\"', '"')
         if "```\n```" in self.task:
-            t = self.task.split("```\n```")[1].strip()
+            t = self.task.split("```\n```")[1][1:].rstrip()
             self.code = t.split('\n')
         elif "```" in self.task:
-            t = self.task.split("```")[1].strip()
+            t = self.task.split("```")[1][1:].rstrip()
             self.code = t.split('\n')
         else:
             self.code = ['код не распознан']
