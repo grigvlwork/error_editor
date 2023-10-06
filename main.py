@@ -73,6 +73,21 @@ class MyWidget(QMainWindow):
             self.full_table_tv.setColumnWidth(3, 220)
             self.full_table_tv.setColumnWidth(4, 220)
             self.full_table_tv.setColumnWidth(5, 220)
+            # https: // stackoverflow.com / questions / 62407539 / qtableview - search - and -highlight - items
+            # start = self.model.index(0, 0)
+            # text = self.current_rec.row_id
+            # matches = self.model.match(
+            #     start,
+            #     QtCore.Qt.DisplayRole,
+            #     text,
+            #     hits=1,
+            #     flags=QtCore.Qt.MatchContains
+            # )
+            # if matches:
+            #     index = matches[0]
+            #     # index.row(), index.column()
+            #     self.full_table_tv.selectionModel().select(
+            #         index, QtCore.QItemSelectionModel.Select)
 
     @QtCore.pyqtSlot("QModelIndex")
     def change_current_rec(self, modelIndex):
