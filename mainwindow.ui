@@ -24,9 +24,9 @@
        <attribute name="title">
         <string>Просмотр по одному</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
            <widget class="QPushButton" name="open_btn">
             <property name="text">
@@ -65,63 +65,79 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_6"/>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QRadioButton" name="accept">
+              <property name="text">
+               <string>Ответ принят</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="irrelevant">
+              <property name="text">
+               <string>Не актуальный</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
-           <widget class="QRadioButton" name="accept">
-            <property name="text">
-             <string>Ответ принят</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">buttonGroup</string>
-            </attribute>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="irrelevant">
-            <property name="text">
-             <string>Не актуальный</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">buttonGroup</string>
-            </attribute>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="score_lb">
-            <property name="text">
-             <string>  Оценка</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="score">
+           <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
-             <property name="text">
-              <string>2</string>
-             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="QLabel" name="score_lb">
+                <property name="text">
+                 <string>  Оценка</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="score">
+                <item>
+                 <property name="text">
+                  <string>2</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>1</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>-1</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>-2</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
-             <property name="text">
-              <string>1</string>
-             </property>
+             <widget class="QCheckBox" name="filter_comments_cb">
+              <property name="text">
+               <string>Показать все</string>
+              </property>
+             </widget>
             </item>
-            <item>
-             <property name="text">
-              <string>0</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>-1</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>-2</string>
-             </property>
-            </item>
-           </widget>
+           </layout>
           </item>
           <item>
            <spacer name="horizontalSpacer">
