@@ -1,9 +1,10 @@
 import sys
 
 from PyQt5 import uic, QtCore, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox, QMenu
 from data import datasource
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
+from PyQt5.Qt import QClipboard
 from PyQt5.QtCore import QModelIndex
 from images import files_rc
 
@@ -182,6 +183,7 @@ class MyWidget(QMainWindow):
         if flag:
             self.df.save_record(self.current_rec)
             if self.model is not None:
+                # иногда пропадает self.current_rec
                 self.model.setItem(self.current_index, self.current_reс.get_row())
             self.records[self.current_index] = self.current_rec
             self.save_btn.setEnabled(True)
@@ -262,6 +264,11 @@ class MyWidget(QMainWindow):
         # self.current_rec.verdict = False
         self.score_lb.hide()
         self.score.hide()
+
+    def contextMenuEvent(self, event):
+        contextMenu = QMenu(self)
+        copyAction = contextMenu.addAction('Копировать')
+        action = contextMenu.exec_(self.mapToGlobal(event.pos()))
 
 
 if __name__ == '__main__':
