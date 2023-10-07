@@ -114,7 +114,7 @@ class Dataframe:
         self.main_df.loc[self.main_df['RowID'] == int(record.row_id), [self.headers['verdict']]] =\
             'accept_answer' if record.verdict else 'question_is_irrelevant'
         if record.verdict:
-            self.main_df.loc[self.main_df['RowID'] == int(record.row_id), [self.headers['score']]] = record.score
+            self.main_df.loc[self.main_df['RowID'] == int(record.row_id), [self.headers['score']]] = float(record.score)
         else:
             self.main_df.loc[self.main_df['RowID'] == int(record.row_id), [self.headers['score']]] = np.nan
         new_filename = self.filename.replace('.xlsx', '-auto.xlsx')

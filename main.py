@@ -22,6 +22,8 @@ class MyWidget(QMainWindow):
         self.previous.clicked.connect(self.previous_record)
         self.save_btn.clicked.connect(self.save_data)
         self.filter_comments_cb.stateChanged.connect(self.filter_comments)
+        self.accept.clicked.connect(self.accepted)
+        self.irrelevant.clicked.connect(self.irrelevanted)
         self.tabWidget.setTabVisible(1, False)
         self.model = None
         self.code_model = None
@@ -166,8 +168,18 @@ class MyWidget(QMainWindow):
                 self.score.hide()
 
     def next_record(self):
+        flag = False
         if self.new_answer.toPlainText() != str(self.current_rec.new_answer):
             self.current_rec.new_answer = self.new_answer.toPlainText()
+            flag = True
+        if self.current_rec.verdict != self.accept.isChecked():
+            self.current_rec.verdict = self.accept.isChecked()
+            self.current_rec.score = self.score.currentText() if self.accept.isChecked() else ''
+            flag = True
+        if self.score.currentText() != self.current_rec.score:
+            self.current_rec.score = self.score.currentText() if self.accept.isChecked() else ''
+            flag = True
+        if flag:
             self.df.save_record(self.current_rec)
             if self.model is not None:
                 self.model.setItem(self.current_index, self.current_reс.get_row())
@@ -179,8 +191,18 @@ class MyWidget(QMainWindow):
             self.load_record()
 
     def previous_record(self):
-        if self.new_answer.toPlainText() != self.current_rec.new_answer:
+        flag = False
+        if self.new_answer.toPlainText() != str(self.current_rec.new_answer):
             self.current_rec.new_answer = self.new_answer.toPlainText()
+            flag = True
+        if self.current_rec.verdict != self.accept.isChecked():
+            self.current_rec.verdict = self.accept.isChecked()
+            self.current_rec.score = self.score.currentText() if self.accept.isChecked() else ''
+            flag = True
+        if self.score.currentText() != self.current_rec.score:
+            self.current_rec.score = self.score.currentText() if self.accept.isChecked() else ''
+            flag = True
+        if flag:
             self.df.save_record(self.current_rec)
             if self.model is not None:
                 self.model.setItem(self.current_index, self.current_reс.get_row())
@@ -192,8 +214,20 @@ class MyWidget(QMainWindow):
             self.load_record()
 
     def save_data(self):
+        flag = False
         if self.new_answer.toPlainText() != str(self.current_rec.new_answer):
             self.current_rec.new_answer = self.new_answer.toPlainText()
+            flag = True
+        if self.accept.isDown() and not self.current_rec.verdict or \
+                self.irrelevant().toggled and self.current_rec.verdict:
+            self.current_rec.verdict = self.accept().isDown()
+            flag = True
+        if self.current_rec.verdict and self.current_rec.score != self.score.text():
+            self.current_rec.score = self.score.currentText()
+            flag = True
+        if not self.current_rec.verdict and self.current_rec.score != '':
+            self.current_rec.score = ''
+        if flag:
             self.df.save_record(self.current_rec)
         if self.df is not None:
             self.df.save()
@@ -219,6 +253,15 @@ class MyWidget(QMainWindow):
         self.load_record()
         self.model = None
 
+    def accepted(self):
+        # self.current_rec.verdict = True
+        self.score_lb.show()
+        self.score.show()
+
+    def irrelevanted(self):
+        # self.current_rec.verdict = False
+        self.score_lb.hide()
+        self.score.hide()
 
 
 if __name__ == '__main__':
