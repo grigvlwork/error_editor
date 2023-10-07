@@ -148,6 +148,14 @@ class MyWidget(QMainWindow):
                     self.next.setEnabled(False)
                 else:
                     self.next.setEnabled(True)
+            if self.current_rec.verdict:
+                self.accept.toggle()
+                self.score_lb.show()
+                self.score.show()
+            else:
+                self.irrelevant.toggle()
+                self.score_lb.hide()
+                self.score.hide()
 
     def next_record(self):
         if self.new_answer.toPlainText() != str(self.current_rec.new_answer):
