@@ -9,7 +9,7 @@ class Record:
                  super_answer='', task='', new_answer='',
                  score='', verdict=''):
         self.row_id = row_id
-        self.comment = comment
+        self.comment = comment if str(new_answer) != 'nan' else ''
         self.teacher_answer = teacher_answer
         self.super_answer = super_answer if str(super_answer) != 'nan' else ''
         self.task = task.replace('\\"', '"')
@@ -29,12 +29,12 @@ class Record:
     def get_row(self):
         return [
             str(self.row_id),
-            self.comment,
+            "" if str(self.comment) == 'nan' else str(self.comment),
             self.teacher_answer,
             "" if str(self.super_answer) == 'nan' else str(self.super_answer),
             self.task,
             "" if str(self.new_answer) == 'nan' else str(self.new_answer),
-            self.score,
+            "" if str(self.score) == 'nan' or len(str(self.score)) == 0 else str(int(self.score)),
             'accept_answer' if self.verdict else 'question_is_irrelevant'
         ]
 

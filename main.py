@@ -21,6 +21,7 @@ class MyWidget(QMainWindow):
         self.next.clicked.connect(self.next_record)
         self.previous.clicked.connect(self.previous_record)
         self.save_btn.clicked.connect(self.save_data)
+        self.filter_comments_cb.stateChanged.connect(self.filter_comments)
         self.tabWidget.setTabVisible(1, False)
         self.model = None
         self.code_model = None
@@ -63,7 +64,7 @@ class MyWidget(QMainWindow):
             self.model.setHorizontalHeaderItem(6, header)
             header = QStandardItem(self.df.headers['verdict'])
             self.model.setHorizontalHeaderItem(7, header)
-            self.records = self.df.get_all_records(True)
+            # self.records = self.df.get_all_records(True)
             for rec in self.records:
                 items = []
                 for it in rec.get_row():
@@ -207,6 +208,18 @@ class MyWidget(QMainWindow):
         self.new_answer.clear()
         self.new_answer.appendPlainText(self.my_answer.toPlainText())
 
+    def filter_comments(self):
+        if self.filter_comments_cb.isChecked():
+            self.df.get_all_records(True, False)
+
+        else:
+            self.df.get_all_records(True, True)
+        self.current_index = 0
+        self.current_rec = self.records[0]
+        self.load_record()
+        self.model = None
+
+
 
 if __name__ == '__main__':
     import traceback
@@ -217,6 +230,8 @@ if __name__ == '__main__':
 
     def excepthook(exc_type, exc_value, exc_tb):
         tb = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
+        # tb += '\n'.join(ex.current_rec.get_row())
+        print(tb)
 
         msg = QMessageBox.critical(
             None,
