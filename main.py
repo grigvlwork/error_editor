@@ -59,6 +59,10 @@ class MyWidget(QMainWindow):
             self.model.setHorizontalHeaderItem(4, header)
             header = QStandardItem(self.df.headers['new_ans'])
             self.model.setHorizontalHeaderItem(5, header)
+            header = QStandardItem(self.df.headers['score'])
+            self.model.setHorizontalHeaderItem(6, header)
+            header = QStandardItem(self.df.headers['verdict'])
+            self.model.setHorizontalHeaderItem(7, header)
             self.records = self.df.get_all_records(True)
             for rec in self.records:
                 items = []
@@ -73,6 +77,9 @@ class MyWidget(QMainWindow):
             self.full_table_tv.setColumnWidth(3, 220)
             self.full_table_tv.setColumnWidth(4, 220)
             self.full_table_tv.setColumnWidth(5, 220)
+            self.full_table_tv.setColumnWidth(6, 70)
+            self.full_table_tv.setColumnWidth(7, 120)
+
             # https://stackoverflow.com/questions/62407539/
         self.full_table_tv.clearSelection()
         start = self.model.index(0, 0)
@@ -90,7 +97,6 @@ class MyWidget(QMainWindow):
             self.full_table_tv.selectionModel().select(
                 index, QtCore.QItemSelectionModel.Select)
             self.full_table_tv.scrollTo(index)
-
 
     @QtCore.pyqtSlot("QModelIndex")
     def change_current_rec(self, modelIndex):
@@ -151,6 +157,7 @@ class MyWidget(QMainWindow):
             if self.current_rec.verdict:
                 self.accept.toggle()
                 self.score_lb.show()
+                self.score.setCurrentIndex(2 - int(self.current_rec.score))
                 self.score.show()
             else:
                 self.irrelevant.toggle()
@@ -200,8 +207,25 @@ class MyWidget(QMainWindow):
         self.new_answer.clear()
         self.new_answer.appendPlainText(self.my_answer.toPlainText())
 
+
 if __name__ == '__main__':
+    import traceback
+
     app = QApplication(sys.argv)
     ex = MyWidget()
+
+
+    def excepthook(exc_type, exc_value, exc_tb):
+        tb = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
+
+        msg = QMessageBox.critical(
+            None,
+            "Error catched!:",
+            tb
+        )
+        QApplication.quit()
+
+
+    sys.excepthook = excepthook
     ex.show()
     sys.exit(app.exec_())

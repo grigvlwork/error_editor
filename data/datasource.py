@@ -23,7 +23,7 @@ class Record:
             self.code = ['код не распознан']
         # self.code = self.code.replace('\"', '"')
         self.new_answer = new_answer if str(new_answer) != 'nan' else ''
-        self.score = score if str(score) != 'nan' else ''
+        self.score = str(int(score)) if str(score) != 'nan' else ''
         self.verdict = True if str(verdict) == 'accept_answer' else False
 
     def get_row(self):
