@@ -9,10 +9,10 @@ class Record:
                  super_answer='', task='', new_answer='',
                  score='', verdict=''):
         self.row_id = row_id
-        self.comment = comment if str(new_answer) != 'nan' else ''
+        self.comment = comment.strip() if str(comment) != 'nan' else ''
         self.teacher_answer = teacher_answer
         self.super_answer = super_answer if str(super_answer) != 'nan' else ''
-        self.task = task.replace('\\"', '"')
+        self.task = task[2:-4].replace('\\"', '"')
         if "```\n```" in self.task:
             t = self.task.split("```\n```")[1][1:].rstrip()
             self.code = t.split('\n')
@@ -51,10 +51,10 @@ class Dataframe:
         self.rows_list = None
         self.headers = {
             'RowID': 'RowID',
-            'comment': 'Комментарий',
+            'comment': 'Коммент',
             'teach_ans': 'answer',
             'super_ans': 'super_answer',
-            'task': 'задача',
+            'task': 'tasks',
             'new_ans': 'Новый ответ',
             'score': 'valuation',
             'verdict': 'verdict'
