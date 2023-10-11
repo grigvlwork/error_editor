@@ -12,7 +12,7 @@ class Record:
         self.comment = comment.strip() if str(comment) != 'nan' else ''
         self.teacher_answer = teacher_answer
         self.super_answer = super_answer if str(super_answer) != 'nan' else ''
-        self.task = task[2:-4].replace('\\"', '"')
+        self.task = task[2:-4].replace(r'\n', '\n').replace('\\"', '"')
         if "```\n```" in self.task:
             t = self.task.split("```\n```")[1][1:].rstrip()
             self.code = t.split('\n')
