@@ -48,6 +48,8 @@ class MyWidget(QMainWindow):
             # self.comments_cb.addItems(self.df.get_comments())
 
     def full_table(self):
+        # if self.tabWidget.currentIndex() == 0:
+        #     return
         if self.df is not None and self.model is None:
             self.model = QStandardItemModel()
             header = QStandardItem(self.df.headers['RowID'])
@@ -182,9 +184,9 @@ class MyWidget(QMainWindow):
             flag = True
         if flag:
             self.df.save_record(self.current_rec)
-            if self.model is not None:
-                # иногда пропадает self.current_rec
-                self.model.setItem(self.current_index, self.current_reс.get_row())
+            # if self.model is not None:
+            #     # иногда пропадает self.current_rec
+            #     self.model.setItem(self.current_index, self.current_reс.get_row())
             self.records[self.current_index] = self.current_rec
             self.save_btn.setEnabled(True)
         if self.current_index < len(self.records) - 1:
@@ -206,8 +208,8 @@ class MyWidget(QMainWindow):
             flag = True
         if flag:
             self.df.save_record(self.current_rec)
-            if self.model is not None:
-                self.model.setItem(self.current_index, self.current_reс.get_row())
+            # if self.model is not None:
+            #     self.model.setItem(self.current_index, self.current_reс.get_row())
             self.records[self.current_index] = self.current_rec
             self.save_btn.setEnabled(True)
         if self.current_index > 0:
