@@ -50,7 +50,7 @@ class MyWidget(QMainWindow):
     def full_table(self):
         # if self.tabWidget.currentIndex() == 0:
         #     return
-        if self.df is not None and self.model is None:
+        if self.df is not None:
             self.model = QStandardItemModel()
             header = QStandardItem(self.df.headers['RowID'])
             self.model.setColumnCount(6)
