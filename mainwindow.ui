@@ -299,6 +299,13 @@
                </spacer>
               </item>
               <item>
+               <widget class="QPushButton" name="triple_tik">
+                <property name="text">
+                 <string>```</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QPushButton" name="copy_my_to_answer">
                 <property name="enabled">
                  <bool>false</bool>

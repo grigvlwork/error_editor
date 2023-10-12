@@ -25,6 +25,7 @@ class MyWidget(QMainWindow):
         self.filter_comments_cb.stateChanged.connect(self.filter_comments)
         self.accept.clicked.connect(self.accepted)
         self.irrelevant.clicked.connect(self.irrelevanted)
+        self.triple_tik.clicked.connect(self.triple_ticking)
         self.tabWidget.setTabVisible(1, False)
         self.model = None
         self.code_model = None
@@ -271,6 +272,12 @@ class MyWidget(QMainWindow):
         contextMenu = QMenu(self)
         copyAction = contextMenu.addAction('Копировать')
         action = contextMenu.exec_(self.mapToGlobal(event.pos()))
+
+    def triple_ticking(self):
+        t = self.my_answer.toPlainText()
+        text = t.split('`')[-2]
+        self.my_answer.clear()
+        self.my_answer.appendPlainText(t.replace('`' + text + '`', '\n```\n' + text + '\n```'))
 
 
 if __name__ == '__main__':
