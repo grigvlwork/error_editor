@@ -26,6 +26,7 @@ class MyWidget(QMainWindow):
         self.accept.clicked.connect(self.accepted)
         self.irrelevant.clicked.connect(self.irrelevanted)
         self.triple_tik.clicked.connect(self.triple_ticking)
+        self.my_answer.textChanged.connect(self.my_text_changed)
         self.tabWidget.setTabVisible(1, False)
         self.model = None
         self.code_model = None
@@ -224,10 +225,10 @@ class MyWidget(QMainWindow):
             self.current_rec.new_answer = self.new_answer.toPlainText()
             flag = True
         if self.accept.isDown() and not self.current_rec.verdict or \
-                self.irrelevant().toggled and self.current_rec.verdict:
+                self.irrelevant.isChecked() and self.current_rec.verdict:
             self.current_rec.verdict = self.accept().isDown()
             flag = True
-        if self.current_rec.verdict and self.current_rec.score != self.score.text():
+        if self.current_rec.verdict and self.current_rec.score != self.score.currentText():
             self.current_rec.score = self.score.currentText()
             flag = True
         if not self.current_rec.verdict and self.current_rec.score != '':
@@ -277,7 +278,15 @@ class MyWidget(QMainWindow):
         t = self.my_answer.toPlainText()
         text = t.split('`')[-2]
         self.my_answer.clear()
-        self.my_answer.appendPlainText(t.replace('`' + text + '`', '\n```\n' + text + '\n```'))
+        t = t.replace('`' + text + '`', '\n```\n' + text + '\n```')
+        if t[-1] == '.':
+            t = t[:-1]
+        self.my_answer.appendPlainText(t)
+
+
+    def my_text_changed(self):
+        if len(self.my_answer.toPlainText()) > 0:
+            self.copy_my_to_answer.setEnabled(True)
 
 
 if __name__ == '__main__':
