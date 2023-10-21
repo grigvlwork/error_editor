@@ -25,7 +25,8 @@ class MyWidget(QMainWindow):
         self.filter_comments_cb.stateChanged.connect(self.filter_comments)
         self.accept.clicked.connect(self.accepted)
         self.irrelevant.clicked.connect(self.irrelevanted)
-        self.triple_tik.clicked.connect(self.triple_ticking)
+        self.triple_tik_my.clicked.connect(self.triple_ticking_my)
+        self.triple_tik_couch.clicked.connect(self.triple_ticking_couch)
         self.my_answer.textChanged.connect(self.my_text_changed)
         self.tabWidget.setTabVisible(1, False)
         self.model = None
@@ -274,15 +275,23 @@ class MyWidget(QMainWindow):
         copyAction = contextMenu.addAction('Копировать')
         action = contextMenu.exec_(self.mapToGlobal(event.pos()))
 
-    def triple_ticking(self):
+    def triple_ticking_my(self):
         t = self.my_answer.toPlainText()
-        text = t.split('`')[-2]
+        text = t.split('```')[1]
         self.my_answer.clear()
-        t = t.replace('`' + text + '`', '\n```\n' + text + '\n```')
+        t = t.replace('```' + text + '```', '\n```\n' + text + '\n```')
         if t[-1] == '.':
             t = t[:-1]
-        self.my_answer.appendPlainText(t)
+        self.my_answer.setPlainText(t)
 
+    def triple_ticking_couch(self):
+        t = self.couch_answer.toPlainText()
+        text = t.split('```')[1]
+        self.my_answer.clear()
+        t = t.replace('```' + text + '```', '\n```\n' + text + '\n```')
+        if t[-1] == '.':
+            t = t[:-1]
+        self.couch_answer.setPlainText(t)
 
     def my_text_changed(self):
         if len(self.my_answer.toPlainText()) > 0:
