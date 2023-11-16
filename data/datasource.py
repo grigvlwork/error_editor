@@ -72,13 +72,6 @@ class Dataframe:
     #             comms.add(f"{row[self.headers['comment']]}")
     #         return sorted(list(comms))
 
-    def get_rows_by_comment(self, comment):
-        if self.main_df is not None:
-            self.current_df = self.main_df[self.main_df[self.headers['comment']] == comment]
-            self.rows_list = []
-            for i, row in self.current_df.loc[:, ['RowID']].iterrows():
-                self.rows_list.append(f"{row['RowID']}")
-            return self.rows_list
 
     def get_all_records(self, refresh=True, with_comments=True):
         if not refresh:
