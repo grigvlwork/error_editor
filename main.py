@@ -51,8 +51,6 @@ class MyWidget(QMainWindow):
             # self.comments_cb.addItems(self.df.get_comments())
 
     def full_table(self):
-        # if self.tabWidget.currentIndex() == 0:
-        #     return
         if self.df is not None:
             self.model = QStandardItemModel()
             header = QStandardItem(self.df.headers['RowID'])
@@ -74,7 +72,6 @@ class MyWidget(QMainWindow):
             self.model.setHorizontalHeaderItem(7, header)
             header = QStandardItem(self.df.headers['id'])
             self.model.setHorizontalHeaderItem(8, header)
-            # self.records = self.df.get_all_records(True)
             for rec in self.records:
                 items = []
                 for it in rec.get_row():
@@ -93,22 +90,23 @@ class MyWidget(QMainWindow):
             self.full_table_tv.setColumnWidth(8, 55)
 
             # https://stackoverflow.com/questions/62407539/
-        self.full_table_tv.clearSelection()
-        start = self.model.index(0, 0)
-        text = self.current_rec.row_id
-        matches = self.model.match(
-            start,
-            QtCore.Qt.DisplayRole,
-            text,
-            hits=1,
-            flags=QtCore.Qt.MatchExactly
-        )
-        if matches:
-            index = matches[0]
+        # self.full_table_tv.clearSelection()
+        # start = self.model.index(0, 8)
+        # text = self.current_rec.id
+        # matches = self.model.match(
+        #     start,
+        #     QtCore.Qt.DisplayRole,
+        #     text,
+        #     hits=1,
+        #     flags=QtCore.Qt.MatchExactly
+        # )
+        # if matches:
+        #     index = matches[0]
             # index.row(), index.column()
-            self.full_table_tv.selectionModel().select(
-                index, QtCore.QItemSelectionModel.Select)
-            self.full_table_tv.scrollTo(index)
+        index = self.model.index(int(self.current_rec.id) - 2, 8)
+        self.full_table_tv.selectionModel().select(
+            index, QtCore.QItemSelectionModel.Select)
+        self.full_table_tv.scrollTo(index)
 
     @QtCore.pyqtSlot("QModelIndex")
     def change_current_rec(self, modelIndex):
