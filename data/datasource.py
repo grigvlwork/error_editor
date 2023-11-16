@@ -51,7 +51,7 @@ class Dataframe:
         self.rows_list = None
         self.headers = {
             'RowID': 'RowID',
-            'comment': 'Коммент',
+            'comment': 'comment',
             'teach_ans': 'answer',
             'super_ans': 'super_answer',
             'task': 'tasks',
