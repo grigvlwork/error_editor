@@ -72,6 +72,8 @@ class MyWidget(QMainWindow):
             self.model.setHorizontalHeaderItem(6, header)
             header = QStandardItem(self.df.headers['verdict'])
             self.model.setHorizontalHeaderItem(7, header)
+            header = QStandardItem(self.df.headers['id'])
+            self.model.setHorizontalHeaderItem(8, header)
             # self.records = self.df.get_all_records(True)
             for rec in self.records:
                 items = []
@@ -88,6 +90,7 @@ class MyWidget(QMainWindow):
             self.full_table_tv.setColumnWidth(5, 220)
             self.full_table_tv.setColumnWidth(6, 70)
             self.full_table_tv.setColumnWidth(7, 120)
+            self.full_table_tv.setColumnWidth(8, 55)
 
             # https://stackoverflow.com/questions/62407539/
         self.full_table_tv.clearSelection()
