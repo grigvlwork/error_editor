@@ -29,6 +29,7 @@ class MyWidget(QMainWindow):
         self.triple_tik_couch.clicked.connect(self.triple_ticking_couch)
         self.my_answer.textChanged.connect(self.my_text_changed)
         self.tabWidget.setTabVisible(1, False)
+        self.filter_comments_cb.setVisible(False)
         self.model = None
         self.code_model = None
         self.current_rec = None
@@ -42,12 +43,14 @@ class MyWidget(QMainWindow):
             self.df.set_filename(fname[0])
             self.df.open()
             self.records = self.df.get_all_records()
+            self.filter_comments()
             if len(self.records) > 0:
                 self.current_index = 0
                 self.current_rec = self.records[0]
                 self.load_record()
             self.tabWidget.setTabVisible(1, True)
             self.save_btn.setEnabled(True)
+
             # self.comments_cb.addItems(self.df.get_comments())
 
     def full_table(self):
@@ -253,7 +256,6 @@ class MyWidget(QMainWindow):
     def filter_comments(self):
         if self.filter_comments_cb.isChecked():
             self.df.get_all_records(True, False)
-
         else:
             self.df.get_all_records(True, True)
         self.current_index = 0
